@@ -4,27 +4,38 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
     static propTypes = {
+        showActiveTodos: PropTypes.bool.isRequired,
+        updateShowActiveTodos: PropTypes.func.isRequired,
         query: PropTypes.string,
         updateQuery: PropTypes.func//.isRequired
     }
 
     render(){
-        const { query, updateQuery } = this.props
-
+        const { showActiveTodos, updateShowActiveTodos,  query, updateQuery } = this.props
+        const btnCursorStyle = { cursor: 'pointer' }
         return(
             <nav className="navbar navbar-light mb-2">
                 <div className="row w-100">
                     <div className="mr-4">
                         <h5 className="pt-2">To-Do List</h5>
                     </div>
-                    <ul className="nav nav-pills mx-5">
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">Pendentes</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Completas</a>
-                        </li>			  
-                    </ul>
+                    
+                    <div className="btn-group btn-group-toggle mx-4" data-toggle="buttons">
+                        <label style={btnCursorStyle} className={"btn btn-info " + (showActiveTodos ? 'active' : '' )}>
+                            <input
+                                type="radio"
+                                name="options"
+                                id="option1"                                
+                                onClick={() => updateShowActiveTodos(true)} /> Pendentes
+                        </label>
+                        <label style={btnCursorStyle} className={"btn btn-info " + (!showActiveTodos ? 'active' : '' )}>
+                            <input
+                                type="radio"
+                                name="options"
+                                id="option2"                                
+                                onClick={() => updateShowActiveTodos(false)} /> Completas
+                        </label>                      
+                    </div>
                     <div className="col-6 ml-2">
                         <div className="input-group w-75">
                             <div className="input-group-prepend">

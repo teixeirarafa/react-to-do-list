@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import List from './List';
 import EditTodo from './EditTodo';
 import { connect } from 'react-redux';
-import { handleAddTodo, handleDeleteTodo, handleToggle } from '../actions/todos'
+import { handleDeleteTodo, handleToggle } from '../actions/todos'
+import { PropTypes } from 'prop-types';
 
 class Todos extends Component {
-    addItem = (e) => {
-        e.preventDefault()
-    
-        this.props.dispatch(handleAddTodo(
-          this.input.value,
-          () => this.input.value = ''
-        ))
-    }
+    static propTypes = {
+        showActiveTodos: PropTypes.bool.isRequired,
+        showEditTodo: PropTypes.bool.isRequired,
+        updateShowEditTodo: PropTypes.func.isRequired,
+    }    
     
     removeItem = (todo) => {
         this.props.dispatch(handleDeleteTodo(todo))
@@ -29,13 +27,24 @@ class Todos extends Component {
                     toggle={this.toggleItem}
                     items={this.props.todos}
                     remove={this.removeItem}
+                    updateShowEditTodo={this.props.updateShowEditTodo}
                 />
-                <EditTodo />
+                <EditTodo
+                    showEditTodo={this.props.showEditTodo} />
             </div>
         )
     }
 }
 
-export default connect((state) => ({
+function mapStateToProps({ todos }, { showActiveTodos }){
+    if(showActiveTodos){
+        return { todos : todos.filter(todo => !todo.complete) }
+    }
+    else return { todos : todos.filter(todo => todo.complete) }
+}
+
+export default connect(mapStateToProps)(Todos)
+
+/*export default connect((state) => ({
     todos: state.todos
-})) (Todos)
+})) (Todos)*/

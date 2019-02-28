@@ -6,8 +6,19 @@ export const fetchTodos = () =>
     .then(data => data)
     .catch(() => alert('There was an error. Try again.'))
 
-export const deleteTodo = () => {}
+export const deleteTodo = (id) =>
+  fetch(`${api}/todos/${id}`, {
+    method: 'DELETE',
+  }).then(res => res.json())
 
-export const saveTodo = () => {}
+export const saveTodo = (description) => 
+  fetch(`${api}/todos`, {
+    method: 'POST',
+    body: JSON.stringify({ description })
+  }).then(res => res.json())
 
-export const saveTodoToggle  = () => {}
+export const saveTodoToggle  = (todo) =>
+  fetch(`${api}/todos/${todo.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ todo })
+  }).then(res => res.json())

@@ -27,9 +27,9 @@ function toggleTodo (id) {
 }
 
 // criadores de açao assíncronos
-export function handleAddTodo (name, cb) {
+export function handleAddTodo (description, cb) {
     return (dispatch) => {
-      return API.saveTodo(name)
+      return API.saveTodo(description)
         .then((todo) => {
           dispatch(addTodo(todo))
           cb()
