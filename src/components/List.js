@@ -14,16 +14,27 @@ const List = props => {
                     style={{background: item.complete ? '#f6f6f6': 'none'}} >
                     <div className="d-flex w-100 justify-content-between">
                         <div>
-                            <input type="checkbox" checked={item.complete} onChange={()=>{}} className="mr-1" />
+                            <input
+                                type="checkbox"
+                                checked={item.complete}
+                                onChange={() => props.toggle && props.toggle(item)}
+                                className="mr-1" />
                             <label className="mb-0" style={{textDecoration: item.complete ? 'line-through': 'none'}} >
                                 {item.description}
                             </label>				
                         </div>
                         <div>
-                            <button className="btn btn-success btn-sm"><FaCheck /></button>
+                            <small className="mr-4">{new Date(item.duration).toLocaleDateString()}</small>
                             <button
-                                onClick={()=> props.updateShowEditTodo(true)}
-                                className="btn btn-primary btn-sm mx-1"><FaPencilAlt /></button>
+                                onClick={() => props.toggle && props.toggle(item)}
+                                className="btn btn-success btn-sm">
+                                <FaCheck />
+                            </button>
+                            <button
+                                onClick={() => {props.handleEditTodo(item); props.updateShowEditTodo(true)}}
+                                className="btn btn-primary btn-sm mx-1">
+                                <FaPencilAlt />
+                            </button>
                             <button
                                 onClick={() => props.remove(item)} 
                                 className="btn btn-danger btn-sm">

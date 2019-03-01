@@ -51,12 +51,12 @@ export function handleDeleteTodo (todo) {
     }
 }
 
-export function handleToggle (id) {
+export function handleToggle (todo) {
     return (dispatch) => {
-      dispatch(toggleTodo(id))
-      return API.saveTodoToggle(id)
+      dispatch(toggleTodo(todo.id))
+      return API.saveTodoToggle(todo)
         .catch(() => {
-          dispatch(toggleTodo(id))
+          dispatch(toggleTodo(todo.id))
           alert('An error occurred. Try again.')
         })
     }

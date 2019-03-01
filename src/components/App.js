@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import '../App.css';
+import { handleInitialData } from '../actions/shared'
 import Header from './Header';
 import Footer from './Footer';
 import ConnectedTodos from './Todos';
-import { handleInitialData } from '../actions/shared'
 import ConnectedAddItem from './AddItem';
+import Loading from './Loading';
 
 class App extends Component {
   constructor(props) {
@@ -34,17 +35,9 @@ class App extends Component {
   }
   
   render() {
-    const divStyle={width:'3rem', height: '3rem'}
-
     if (this.props.loading === true) {
       return (
-        <div className="container ml-0 mt-5">
-          <div className="d-flex justify-content-center mt-5">
-            <div className="spinner-grow text-info mt-5" style={divStyle} role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <Loading />
       )
     }
 

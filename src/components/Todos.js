@@ -6,11 +6,15 @@ import { handleDeleteTodo, handleToggle } from '../actions/todos'
 import { PropTypes } from 'prop-types';
 
 class Todos extends Component {
+    state = {
+        editTodo: {}
+    }
+
     static propTypes = {
         showActiveTodos: PropTypes.bool.isRequired,
         showEditTodo: PropTypes.bool.isRequired,
         updateShowEditTodo: PropTypes.func.isRequired,
-    }    
+    }
     
     removeItem = (todo) => {
         this.props.dispatch(handleDeleteTodo(todo))
@@ -20,7 +24,13 @@ class Todos extends Component {
         this.props.dispatch(handleToggle(id))
     }
 
-    render() {
+    handleEditTodo = (todo) => {
+        this.setState(() => ({
+            editTodo: todo
+        }))
+    }
+
+    render() {        
         return(
             <div className="row">
                 <List 
@@ -28,9 +38,13 @@ class Todos extends Component {
                     items={this.props.todos}
                     remove={this.removeItem}
                     updateShowEditTodo={this.props.updateShowEditTodo}
+                    handleEditTodo={this.handleEditTodo}
                 />
                 <EditTodo
-                    showEditTodo={this.props.showEditTodo} />
+                    showEditTodo={this.props.showEditTodo}
+                    updateShowEditTodo={this.props.updateShowEditTodo}                    
+                    editTodo={this.state.editTodo}
+                />
             </div>
         )
     }

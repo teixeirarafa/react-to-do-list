@@ -18,7 +18,7 @@ class AddItem extends Component {
             <div className="input-group mb-3 w-75">
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control px-4"
                     placeholder="Adicionar uma tarefa..."
                     ref={(input) => this.input = input}
                 />
