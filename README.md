@@ -2,10 +2,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## `installation`
 
-git clone https://github.com/teixeirarafa/react-to-do-list.git
-cd react-to-do-list
-npm i
-npm start
+git clone https://github.com/teixeirarafa/react-to-do-list.git.
+cd react-to-do-list.
+npm i.
+npm start.
 
 ## Available Scripts
 
