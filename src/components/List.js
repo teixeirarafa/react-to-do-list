@@ -6,7 +6,7 @@ import Tag from './Tag';
 
 const List = props => {
     return(
-        <ul className="list-group col pl-2 mb-5">
+        <ul className="list-group col-lg-8 pl-2 mb-5">
             {props.items.map((item)=> (
                 <li 
                     key={item.id} 
@@ -31,7 +31,7 @@ const List = props => {
                                 <FaCheck />
                             </button>
                             <button
-                                onClick={() => {props.handleEditTodo(item); props.updateShowEditTodo(true)}}
+                                onClick={() => {props.handleEdit(item); props.updateShowEditTodo(true)}}
                                 className="btn btn-primary btn-sm mx-1">
                                 <FaPencilAlt />
                             </button>

@@ -7,14 +7,20 @@ class Header extends Component {
         showActiveTodos: PropTypes.bool.isRequired,
         updateShowActiveTodos: PropTypes.func.isRequired,
         query: PropTypes.string,
-        updateQuery: PropTypes.func//.isRequired
+        updateQuery: PropTypes.func.isRequired
+    }
+
+    updateQuery = (query) => {
+        this.setState(() => ({
+            query: query.trim() 
+        }))
     }
 
     render(){
         const { showActiveTodos, updateShowActiveTodos,  query, updateQuery } = this.props
         const btnCursorStyle = { cursor: 'pointer' }
         return(
-            <nav className="navbar navbar-light mb-2">
+            <nav className="navbar navbar-light mb-5">
                 <div className="row w-100">
                     <div className="mr-4">
                         <h5 className="pt-2">To-Do List</h5>
@@ -44,7 +50,7 @@ class Header extends Component {
                             <input
                                 className="form-control bg-light border-0"
                                 type="search"
-                                placeholder="Search..."
+                                placeholder="pesquise pelo nome da sua tarefa"
                                 value={ query }
                                 onChange={(event) => updateQuery(event.target.value)}
                             />

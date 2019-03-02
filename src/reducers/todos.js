@@ -1,4 +1,4 @@
-import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions/todos'
+import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO, EDIT_TODO } from '../actions/todos'
 import { RECEIVE_DATA } from '../actions/shared';
   
 export default function todos (state = [], action) {
@@ -10,6 +10,8 @@ export default function todos (state = [], action) {
       case TOGGLE_TODO :
         return state.map((todo) => todo.id !== action.id ? todo :
           Object.assign({}, todo, { complete: !todo.complete }))
+      case EDIT_TODO :
+        return state.filter((todo) => todo.id !== action.todo.id).concat(action.todo)    
       case RECEIVE_DATA :
         return action.todos
       default :

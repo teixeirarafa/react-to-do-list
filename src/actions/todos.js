@@ -3,6 +3,7 @@ import * as API from '../service/API'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const ADD_TODO = 'ADD_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
+export const EDIT_TODO = 'EDIT_TODO'
 
 // criadores de açao síncronos
 function addTodo (todo) {
@@ -24,6 +25,13 @@ function toggleTodo (id) {
       type: TOGGLE_TODO,
       id,
     }
+}
+
+function editTodo (todo) {
+  return {
+      type: EDIT_TODO,
+      todo,
+  }
 }
 
 // criadores de açao assíncronos
@@ -54,10 +62,21 @@ export function handleDeleteTodo (todo) {
 export function handleToggle (todo) {
     return (dispatch) => {
       dispatch(toggleTodo(todo.id))
-      return API.saveTodoToggle(todo)
+      return API.editTodo(todo)
         .catch(() => {
           dispatch(toggleTodo(todo.id))
           alert('An error occurred. Try again.')
         })
     }
+}
+
+export function handleEditTodo (todo, callback) {
+  return (dispatch) => {
+    dispatch(editTodo(todo))
+    callback()
+    return API.editTodo(todo)
+        .catch(() => {          
+          alert('An error occurred. Try again.')
+        })    
+  }
 }

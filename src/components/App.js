@@ -13,13 +13,20 @@ class App extends Component {
     super(props)
     this.state = {
       showActiveTodos: true,
-      showEditTodo: false
+      showEditTodo: false,
+      query: ''
     }
   }
 
   componentDidMount () {
     const { dispatch } = this.props
     dispatch(handleInitialData())
+  }
+
+  updateQuery = (query) => {
+    this.setState(() => ({
+        query: query.trim() 
+    }))
   }
 
   updateShowActiveTodos = (show) => {
@@ -43,18 +50,20 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="container ml-0">
+        <div className="container ml-0 mb-5">
           <Header
             showActiveTodos={ this.state.showActiveTodos }
             updateShowActiveTodos={ this.updateShowActiveTodos }
+            updateQuery={ this.updateQuery }
           />
 
           <ConnectedAddItem />
 
           <ConnectedTodos 
-            showActiveTodos={this.state.showActiveTodos}
-            showEditTodo={this.state.showEditTodo}
-            updateShowEditTodo={this.updateShowEditTodo}
+            showActiveTodos={ this.state.showActiveTodos }
+            showEditTodo={ this.state.showEditTodo }
+            updateShowEditTodo={ this.updateShowEditTodo }
+            query={ this.state.query }
           />
         </div>
         <Footer />

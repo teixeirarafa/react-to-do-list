@@ -15,15 +15,15 @@ class AddItem extends Component {
 
     render() {
         return(
-            <div className="input-group mb-3 w-75">
+            <div className="input-group mb-2 col-lg-8 p-0">
                 <input
                     type="text"
-                    className="form-control px-4"
+                    className="form-control"
                     placeholder="Adicionar uma tarefa..."
                     ref={(input) => this.input = input}
                 />
                 <div className="input-group-append">
-                <button className="btn btn-outline-secondary" onClick={this.addItem} type="button">Adicionar</button>
+                    <button className="btn btn-primary" onClick={this.addItem} type="button">Adicionar</button>
                 </div>
             </div>
         )

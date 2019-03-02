@@ -17,7 +17,7 @@ export const saveTodo = (description) =>
     body: JSON.stringify({ description })
   }).then(res => res.json())
 
-export const saveTodoToggle  = (todo) =>
+export const editTodo  = (todo) =>
   fetch(`${api}/todos/${todo.id}`, {
     method: 'PUT',
     body: JSON.stringify({ todo })

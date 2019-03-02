@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import List from './List';
 import EditTodo from './EditTodo';
 import { connect } from 'react-redux';
-import { handleDeleteTodo, handleToggle } from '../actions/todos'
+import { handleDeleteTodo, handleToggle, handleEditTodo } from '../actions/todos'
 import { PropTypes } from 'prop-types';
 
 class Todos extends Component {
@@ -14,6 +14,7 @@ class Todos extends Component {
         showActiveTodos: PropTypes.bool.isRequired,
         showEditTodo: PropTypes.bool.isRequired,
         updateShowEditTodo: PropTypes.func.isRequired,
+        query: PropTypes.string.isRequired
     }
     
     removeItem = (todo) => {
@@ -23,13 +24,22 @@ class Todos extends Component {
     toggleItem = (id) => {
         this.props.dispatch(handleToggle(id))
     }
-
-    handleEditTodo = (todo) => {
+    
+    handleUpdateTodo = (t) => {
+        const todo = {...t}
+        console.log(todo)
+        this.props.dispatch(handleEditTodo(
+            todo,
+            ()=>this.props.updateShowEditTodo(false)
+        ))
+    } 
+    
+    handleEdit = (todo) => {
         this.setState(() => ({
             editTodo: todo
         }))
     }
-
+    
     render() {        
         return(
             <div className="row">
@@ -38,27 +48,31 @@ class Todos extends Component {
                     items={this.props.todos}
                     remove={this.removeItem}
                     updateShowEditTodo={this.props.updateShowEditTodo}
-                    handleEditTodo={this.handleEditTodo}
+                    handleEdit={this.handleEdit}
                 />
-                <EditTodo
+                {this.props.showEditTodo && <EditTodo
                     showEditTodo={this.props.showEditTodo}
                     updateShowEditTodo={this.props.updateShowEditTodo}                    
                     editTodo={this.state.editTodo}
-                />
+                    handleUpdateTodo={this.handleUpdateTodo}
+                />}                
             </div>
         )
     }
 }
 
-function mapStateToProps({ todos }, { showActiveTodos }){
+function mapStateToProps({ todos }, { showActiveTodos, query }){
     if(showActiveTodos){
-        return { todos : todos.filter(todo => !todo.complete) }
+        if(query === '')
+            return { todos : todos.filter(todo => !todo.complete) }
+        else
+            return { todos : todos.filter(todo => !todo.complete).filter((todo) => (todo.description.toString().includes(query.toString())))}
     }
-    else return { todos : todos.filter(todo => todo.complete) }
+    else 
+        if(query === '')
+            return { todos : todos.filter(todo => todo.complete) }
+        else
+            return { todos : todos.filter(todo => todo.complete).filter((todo) => (todo.description.toString().includes(query.toString())))}  
 }
 
 export default connect(mapStateToProps)(Todos)
-
-/*export default connect((state) => ({
-    todos: state.todos
-})) (Todos)*/
